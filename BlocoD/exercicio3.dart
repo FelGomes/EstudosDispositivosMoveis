@@ -3,7 +3,9 @@
 
 String? calcularHectaresParaAlqueires(double alqueiresGoiano){
 
-
+  if(alqueiresGoiano <= 0){
+    return "Sem valor";
+  }
 
   for(int ha = 0; ha <= 100; ha += 10){
     double alqueires = ha/alqueiresGoiano;

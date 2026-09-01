@@ -13,7 +13,7 @@ class Produtor {
     required this.nome,
     required this.cidade
 
-  }) : telefone = null;
+  }) : telefone = "Sem telefone cadastrado";
 
 
 

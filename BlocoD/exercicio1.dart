@@ -2,7 +2,6 @@
 // 70. Use if/else
 
 
-import 'dart:ffi';
 
 final double quantidadeSaca = 909;
 final double hectares = 41;

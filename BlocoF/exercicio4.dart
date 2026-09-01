@@ -8,7 +8,7 @@ List<double> area = [10.90, 18.8, 41.9];
 
 void main() {
 
-  var resultadoPrimeira = transformacao(area);
+  List<double> resultadoPrimeira = transformacao(area);
   print(resultadoPrimeira);
   transformacao2(resultadoPrimeira);
 }
@@ -27,5 +27,5 @@ void transformacao2(resultado){
 
   var resposta = resultado.map((a) => a *10);
 
-  print(resposta);
+  print("A nova lista é $resposta");
 }

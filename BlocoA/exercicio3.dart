@@ -4,7 +4,7 @@
 
 
 const alqueire = 4.84;
-const dataAtual = DateTime.now();
+final dataAtual = DateTime.now(); //valor mutavel
 
 void main() {
   print(alqueire);

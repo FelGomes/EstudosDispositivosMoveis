@@ -38,7 +38,10 @@ class TelaResumo extends StatelessWidget {
   const TelaResumo({super.key});
 
   @override
+  // aqui vai criar a construção
   Widget build(BuildContext context) {
+
+    // Vai rodar a aplicação
     return Scaffold(
       appBar: AppBar(
         title: const Text('Resumo'),
@@ -49,16 +52,26 @@ class TelaResumo extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // ===================================================== BUG 1
+            // ======================
+            // =============================== BUG 1
             // Esta Row tenta colocar dois cards largos lado a lado, mas
             // eles somados passam da largura da tela -> overflow amarelo.
             // CONSERTE: envolva CADA card em um Expanded, para que dividam
             // o espaço disponível em vez de exigir a largura cheia.
             Row(
               children: [
-                _CardNumero(titulo: 'Talhões cadastrados no total', valor: '6'),
+                Explaned(
+                  child: _CardNumero(titulo: 'Talhões cadastrados no total', valor: '6'),
+
+                
+                ),
                 SizedBox(width: 12),
-                _CardNumero(titulo: 'Atividades registradas no mês', valor: '14'),
+
+                Explaned(
+                 child: _CardNumero(titulo: 'Atividades registradas no mês', valor: '14'),
+
+                )
+
               ],
             ),
 

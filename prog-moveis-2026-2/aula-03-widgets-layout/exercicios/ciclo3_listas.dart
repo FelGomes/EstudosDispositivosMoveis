@@ -74,7 +74,7 @@ class TelaTalhoes extends StatelessWidget {
           return ListTile(
             leading: const Icon(Icons.grass, color: Color(0xFF1E5631)),
             title: Text(talhao.nome),
-            subtitle: Text('${talhao.areaHa} ha — ${talhao.cultura}'),
+            subtitle: Text('${talhao.areaHa.to} ha — ${talhao.cultura}'),
             trailing: const Icon(Icons.chevron_right),
           );
         },

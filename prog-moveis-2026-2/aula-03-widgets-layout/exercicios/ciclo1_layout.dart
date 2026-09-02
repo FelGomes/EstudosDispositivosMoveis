@@ -73,6 +73,8 @@ class TelaInicial extends StatelessWidget {
                 Text('Responsavel: ', style: TextStyle(fontSize: 16)),
                 Text('Felipe', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
 
+                sizedBox(height: 20),
+
               ],
             ),
           ],
@@ -125,3 +127,20 @@ class Ciclo1Atividade1 extends StatelessWidget {
 //
 // DICA: no DartPad, o hot reload é automático ao salvar. Se algo parecer
 // travado, use o botão Run de novo.
+
+
+
+// Comentarios sobre o codigo
+
+// scoffold -> esqueleto
+/* -> appber bar
+ *  => body
+ * => Center pq seria tudo centralizado
+ * 
+ * CHildren -> Mais de 1
+ * child -> apenas 1
+ * 
+ * 
+ * 
+ * 
+ */

@@ -34,92 +34,253 @@ class CadernoApp extends StatelessWidget {
   }
 }
 
+// class Talhao {
+//   final String nome;
+//   final double areaHa;
+//   final String cultura;
+//   const Talhao({
+//     required this.nome,
+//     required this.areaHa,
+//     required this.cultura,
+//   });
+// }
+
+// // Os dados da propriedade — a mesma lista dos exercícios.
+// const List<Talhao> talhoes = [
+//   Talhao(nome: 'Talhão 1', areaHa: 38.0, cultura: 'soja'),
+//   Talhao(nome: 'Talhão 2', areaHa: 24.5, cultura: 'milho'),
+//   Talhao(nome: 'Talhão 3', areaHa: 42.0, cultura: 'milho'),
+//   Talhao(nome: 'Talhão 4', areaHa: 31.2, cultura: 'soja'),
+//   Talhao(nome: 'Talhão 5', areaHa: 12.8, cultura: 'sorgo'),
+//   Talhao(nome: 'Talhão 6', areaHa: 19.4, cultura: 'milho'),
+//   Talhao(nome: "Talhao 7", areaHa: 89.90, cultura: 'Feijao'),
+//   Talhao(nome: 'Talhao 8', areaHa: 21.8, cultura: 'Mandioca')
+// ];
+
+// class TelaTalhoes extends StatelessWidget {
+//   const TelaTalhoes({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Talhões'),
+//         backgroundColor: const Color(0xFF1E5631),
+//         foregroundColor: Colors.white,
+//       ),
+//       // ListView.builder percorre a lista e cria um item para cada talhão.
+//       // itemCount: quantos itens existem.
+//       // itemBuilder: uma função que recebe o índice e devolve o widget
+//       //              daquele item.
+//       body: ListView.builder(
+//         itemCount: talhoes.length,
+//         itemBuilder: (context, indice) {
+//           final talhao = talhoes[indice];
+//           // ListTile: um item de lista pronto, com título, subtítulo e ícones.
+//           return ListTile(
+//             leading: const Icon(Icons.grass, color: Color(0xFF1E5631)),
+//             title: Text(talhao.nome),
+//             subtitle: Text('${talhao.areaHa.toStringAsFixed(2).replaceAll('.', ',')} ha — ${talhao.cultura}'),
+//             trailing: const Icon(Icons.chevron_right),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+// Atividade ciclo 2
+
+// class TelaResumo extends StatelessWidget {
+//   const TelaResumo({super.key});
+
+//   @override
+//   // aqui vai criar a construção
+//   Widget build(BuildContext context) {
+//     // Vai rodar a aplicação
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Resumo'),
+//         backgroundColor: const Color(0xFF1E5631),
+//         foregroundColor: Colors.white,
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16),
+//         child: Column(
+//           children: [
+//             // ======================
+//             // =============================== BUG 1
+//             // Esta Row tenta colocar dois cards largos lado a lado, mas
+//             // eles somados passam da largura da tela -> overflow amarelo.
+//             // CONSERTE: envolva CADA card em um Expanded, para que dividam
+//             // o espaço disponível em vez de exigir a largura cheia.
+
+//             // Exercicio1
+//             Row(
+//               children: [
+//                 Expanded(
+//                   child: _CardNumero(
+//                     titulo: 'Talhões cadastrados no total',
+//                     valor: '6',
+//                   ),
+//                 ),
+
+//                 const SizedBox(width: 12),
+
+//                 Expanded(
+//                   child: _CardNumero(
+//                     titulo: 'Atividades registradas no mês',
+//                     valor: '14',
+//                   ),
+//                 ),
+//               ],
+//             ),
+
+//             const SizedBox(height: 16),
+
+//             // ===================================================== BUG 2
+//             // Este texto é muito longo e, dentro de uma Row, tenta ocupar
+//             // uma largura infinita -> overflow.
+//             // CONSERTE: envolva o Text em um Expanded para que ele quebre
+//             // a linha dentro do espaço que sobra.
+//             // Exercicio 2
+//             Row(
+//               children: const [
+//                 Icon(Icons.info_outline, color: Color(0xFF1E5631)),
+//                 SizedBox(width: 8),
+//                 Expanded(
+//                   child: Text(
+//                     'Última sincronização feita há três dias — verifique o sinal '
+//                     'antes de sair para a lavoura para não perder registros.',
+//                   ),
+//                 ),
+//               ],
+//             ),
+
+//             Row(
+//               children: [
+//                 Flexible(
+//                   flex: 2,
+//                   child: Container(
+//                     color: Colors.amber,
+//                     child: _CardNumero(
+//                       titulo: "Felipe testando o atributo flexible",
+//                       valor: '10',
+//                     ),
+//                   ),
+//                 ),
+//                 const SizedBox(width: 12),
+
+//                 Flexible(
+//                   flex: 1,
+//                   child: _CardNumero(
+//                     titulo: "Testando o outro bloco",
+//                     valor: '22',
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class _CardNumero extends StatelessWidget {
+//   final String titulo;
+//   final String valor;
+//   const _CardNumero({required this.titulo, required this.valor});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.all(16),
+//       decoration: BoxDecoration(
+//         color: const Color(0xFFD5F5E3),
+//         borderRadius: BorderRadius.circular(8),
+//       ),
+//       child: Column(
+//         children: [
+//           Text(
+//             valor,
+//             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+//           ),
+//           const SizedBox(height: 4),
+//           Text(titulo, textAlign: TextAlign.center),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+//Ciclo 1
 class TelaResumo extends StatelessWidget {
   const TelaResumo({super.key});
 
   @override
-  // aqui vai criar a construção
   Widget build(BuildContext context) {
-    // Vai rodar a aplicação
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Resumo'),
+        title: const Text('Atividade do clico 1'),
         backgroundColor: const Color(0xFF1E5631),
         foregroundColor: Colors.white,
       ),
-      body: Padding(
+
+      // Container: uma caixa que dá cor, margem, borda e tamanho ao filho.
+      body: Container(
+        // Padding interno: afasta o conteúdo das bordas da caixa.
         padding: const EdgeInsets.all(16),
+
+        // Column: empilha os filhos na vertical, de cima para baixo.
         child: Column(
+          // Controla o posicionamento dos filhos na horizontal.
+          crossAxisAlignment: CrossAxisAlignment.center,
+
           children: [
-            // ======================
-            // =============================== BUG 1
-            // Esta Row tenta colocar dois cards largos lado a lado, mas
-            // eles somados passam da largura da tela -> overflow amarelo.
-            // CONSERTE: envolva CADA card em um Expanded, para que dividam
-            // o espaço disponível em vez de exigir a largura cheia.
+            Container(
+              padding: const EdgeInsets.all(16),
+              color: const Color(0xFFD5F5E3),
 
-            // Exercicio1
+              child: Column(
+                children: [
+                  Text(
+                    'Fazenda Ferreira vale do goias',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+
+                  // SizedBox: um espaço vazio de tamanho fixo.
+                  SizedBox(height: 4),
+
+                  Text(
+                    'Ceres O universo do mundo — GO',
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 16),
+
+            // Row: distribui os filhos na horizontal, lado a lado.
             Row(
               children: [
-                Expanded(
-                  child: _CardNumero(
-                    titulo: 'Talhões cadastrados no total',
-                    valor: '6',
-                  ),
-                ),
-
-                const SizedBox(width: 12),
-
-                Expanded(
-                  child: _CardNumero(
-                    titulo: 'Atividades registradas no mês',
-                    valor: '14',
-                  ),
+                Text('Área total: ', style: TextStyle(fontSize: 16)),
+                Text(
+                  '96,4 ha',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
 
-            const SizedBox(height: 16),
-
-            // ===================================================== BUG 2
-            // Este texto é muito longo e, dentro de uma Row, tenta ocupar
-            // uma largura infinita -> overflow.
-            // CONSERTE: envolva o Text em um Expanded para que ele quebre
-            // a linha dentro do espaço que sobra.
-            // Exercicio 2
-            Row(
-              children: const [
-                Icon(Icons.info_outline, color: Color(0xFF1E5631)),
-                SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'Última sincronização feita há três dias — verifique o sinal '
-                    'antes de sair para a lavoura para não perder registros.',
-                  ),
-                ),
-              ],
-            ),
+            SizedBox(height: 16),
 
             Row(
               children: [
-                Flexible(
-                  flex: 10,
-                  child: Container(
-                    color: Colors.amber,
-                    child: _CardNumero(
-                      titulo: "Felipe testando o atributo flexible",
-                      valor: '10',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-
-                Flexible(
-                  flex: 10,
-                  child: _CardNumero(
-                    titulo: "Testando o outro bloco",
-                    valor: '22',
-                  ),
+                Text('Responsavel: ', style: TextStyle(fontSize: 16)),
+                Text(
+                  'Felipe',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -129,93 +290,6 @@ class TelaResumo extends StatelessWidget {
     );
   }
 }
-
-class _CardNumero extends StatelessWidget {
-  final String titulo;
-  final String valor;
-  const _CardNumero({required this.titulo, required this.valor});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFD5F5E3),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: [
-          Text(
-            valor,
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 4),
-          Text(titulo, textAlign: TextAlign.center),
-        ],
-      ),
-    );
-  }
-}
-
-// Ciclo 1
-// class TelaResumo extends StatelessWidget {
-//   const TelaResumo({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Atividade do clico 1'),
-//         backgroundColor: const Color(0xFF1E5631),
-//         foregroundColor: Colors.white,
-//       ),
-//       // Container: uma caixa que dá cor, margem, borda e tamanho ao filho.
-//       body: Container(
-//         // Padding interno: afasta o conteúdo das bordas da caixa.
-//         padding: const EdgeInsets.all(16),
-//         // Column: empilha os filhos na vertical, de cima para baixo.
-//         child: Column(
-//           // Alinha os filhos à esquerda (início da horizontal). Segue o padrao do html
-//           // Controla o posicionamento do texto
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: const [
-//             Text(
-//               'Fazenda Ferreira vale do goias"',
-//               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-//             ),
-//             // SizedBox: um espaço vazio de tamanho fixo. Aqui, respiro vertical.
-//             SizedBox(height: 4),
-
-//             Text(
-//               'Ceres O universo do mundo — GO',
-//               style: TextStyle(fontSize: 16, color: Colors.black54),
-//             ),
-//             SizedBox(height: 16),
-//             // Row: distribui os filhos na horizontal, lado a lado.
-//             Row(
-//               children: [
-//                 Text('Área total: ', style: TextStyle(fontSize: 16)),
-//                 Text(
-//                   '96,4 ha',
-//                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 16),
-//             Row(
-//               children: [
-//                 Text('Responsavel: ', style: TextStyle(fontSize: 16)),
-//                 Text(
-//                   'Felipe',
-//                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
 
 // Widget build(BuildContext context) {
 //   return Scaffold(

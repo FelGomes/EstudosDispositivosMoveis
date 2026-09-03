@@ -88,11 +88,19 @@ class TelaResumo extends StatelessWidget {
                 // COMPLETE: envolva cada _CardNumero em um Expanded para que
                 // os três dividam a largura sem overflow. Há um SizedBox de
                 // 8 de largura entre eles.
-                _CardNumero(titulo: 'Talhões', valor: '${talhoes.length}'),
+                Expaned(
+                  child: _CardNumero(titulo: 'Talhões', valor: '${talhoes.length}'),
+                )
                 const SizedBox(width: 8),
-                _CardNumero(titulo: 'Atividades', valor: '14'),
+
+                Expaned(
+                    child: CardNumero(titulo: 'Atividades', valor: '14'),
+
+                )
                 const SizedBox(width: 8),
-                _CardNumero(titulo: 'Último', valor: 'há 3d'),
+                _Expaned(
+                  child: CardNumero(titulo: 'Último', valor: 'há 3d'),
+                )
               ],
             ),
           ),

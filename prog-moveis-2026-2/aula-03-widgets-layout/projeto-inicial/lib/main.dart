@@ -29,10 +29,36 @@ class CadernoApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E5631)),
         useMaterial3: true,
       ),
-      home: const TelaTalhoes(),
+      home: const TelaResumo(),
     );
   }
 }
+
+// class _CardNumero extends StatelessWidget {
+//   final String titulo;
+//   final String valor;
+//   const _CardNumero({required this.titulo, required this.valor});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.all(12),
+//       decoration: BoxDecoration(
+//         color: const Color(0xFFEFF7F1),
+//         borderRadius: BorderRadius.circular(8),
+//         border: Border.all(color: const Color(0xFF1E8449)),
+//       ),
+//       child: Column(
+//         children: [
+//           Text(valor,
+//               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+//           const SizedBox(height: 2),
+//           Text(titulo, style: const TextStyle(fontSize: 12)),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class Talhao {
   final String nome;
@@ -45,7 +71,6 @@ class Talhao {
   });
 }
 
-// Os dados da propriedade — a mesma lista dos exercícios.
 const List<Talhao> talhoes = [
   Talhao(nome: 'Talhão 1', areaHa: 38.0, cultura: 'soja'),
   Talhao(nome: 'Talhão 2', areaHa: 24.5, cultura: 'milho'),
@@ -53,59 +78,264 @@ const List<Talhao> talhoes = [
   Talhao(nome: 'Talhão 4', areaHa: 31.2, cultura: 'soja'),
   Talhao(nome: 'Talhão 5', areaHa: 12.8, cultura: 'sorgo'),
   Talhao(nome: 'Talhão 6', areaHa: 19.4, cultura: 'milho'),
-  Talhao(nome: "Talhao 7", areaHa: 89.90, cultura: 'Feijao'),
-  Talhao(nome: 'Talhao 8', areaHa: 21.8, cultura: 'Mandioca'),
 ];
 
-class TelaTalhoes extends StatelessWidget {
-  const TelaTalhoes({super.key});
+class TelaResumo extends StatelessWidget {
+  const TelaResumo({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Área total calculada a partir da lista (revisão dos exercícios de Dart).
+    final areaTotal = talhoes.fold<double>(0, (soma, t) => soma + t.areaHa);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Talhões'),
+        title: const Text('Caderno de Campo do Vale'),
         backgroundColor: const Color(0xFF1E5631),
         foregroundColor: Colors.white,
       ),
-      // ListView.builder percorre a lista e cria um item para cada talhão.
-      // itemCount: quantos itens existem.
-      // itemBuilder: uma função que recebe o índice e devolve o widget
-      //              daquele item.
-      body: ListView.builder(
-        itemCount: talhoes.length,
-        itemBuilder: (context, indice) {
-          final talhao = talhoes[indice];
-
-          final IconData iconeCultura = switch (talhao.cultura
-              .trim()
-              .toLowerCase()) {
-            'milho' => Icons.grain,
-            'soja' => Icons.eco,
-            'sorgo' => Icons.spa,
-
-            _ => Icons.grass,
-          };
-
-          return Card(
-            margin: EdgeInsets.symmetric(horizontal: 26, vertical: 16),
-            elevation: 2,
-            child: ListTile(
-              leading: Icon(iconeCultura, color: Color(0xFF1E5631)), //icone
-              title: Text(talhao.nome), //titulo
-              subtitle: Text(
-                '${talhao.areaHa.toStringAsFixed(2).replaceAll('.', ',')} ha — ${talhao.cultura}',
-              ), //subtitulo
-              trailing: const Icon(Icons.chevron_right),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ---- CABEÇALHO (Ciclo 1) ----
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            color: const Color(0xFFD5F5E3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Fazenda Ferreira vale do Goias',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Ceres, a cidade do universo · ${areaTotal.toStringAsFixed(1)} ha no total',
+                ),
+              ],
             ),
-          );
+          ),
 
-          // ListTile: um item de lista pronto, com título, subtítulo e ícones.
+          // ---- TRÊS NÚMEROS (Ciclo 2) ----
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                // COMPLETE: envolva cada _CardNumero em um Expanded para que
+                // os três dividam a largura sem overflow. Há um SizedBox de
+                // 8 de largura entre eles.
+                Expanded(
+                  child: _CardNumero(
+                    titulo: 'Talhões',
+                    valor: '${talhoes.length}',
+                  ),
+                ),
+                const SizedBox(width: 8),
+
+                Expanded(
+                  child: _CardNumero(titulo: 'Atividades', valor: '14'),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _CardNumero(titulo: 'Último', valor: 'há 3d'),
+                ),
+              ],
+            ),
+          ),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'Talhões da propriedade',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 8),
+
+          // ---- LISTA (Ciclo 3) ----
+          // COMPLETE: a lista precisa ocupar todo o espaço que sobra na tela.
+          // Dentro de uma Column, um ListView precisa ser envolvido em
+          // Expanded, senão dá erro de altura infinita. Envolva o
+          // ListView.builder abaixo em um Expanded.
+          Expanded(
+            child: ListView.builder(
+              itemCount: talhoes.length,
+              itemBuilder: (context, indice) {
+                final talhao = talhoes[indice];
+
+                final IconData iconeCultura = switch (talhao.cultura
+                    .trim()
+                    .toLowerCase()) {
+                  'milho' => Icons.grain,
+                  'soja' => Icons.eco,
+                  'sorgo' => Icons.spa,
+
+                  _ => Icons.grass,
+                };
+
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 26, vertical: 10),
+                  elevation: 5,
+                  child: ListTile(
+                    leading: Icon(
+                      iconeCultura,
+                      color: Color.fromARGB(255, 53, 138, 81),
+                    ), //icone
+                    title: Text(talhao.nome), //titulo
+                    subtitle: Text(
+                      '${talhao.areaHa.toStringAsFixed(2).replaceAll('.', ',')} ha — ${talhao.cultura}',
+                    ), //subtitulo
+                    trailing: const Icon(Icons.chevron_right),
+                  ),
+                );
+
+                // ListTile: um item de lista pronto, com título, subtítulo e ícones.
+              },
+            ),
+          ),
+        ],
+      ),
+      // Botão flutuante de nova atividade — sem função ainda.
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF1E5631),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Novo registro'),
+                content: const Text('Novo registro em breve!'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
         },
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
 }
+
+class _CardNumero extends StatelessWidget {
+  final String titulo;
+  final String valor;
+  const _CardNumero({required this.titulo, required this.valor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEFF7F1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFF1E8449)),
+      ),
+      child: Column(
+        children: [
+          Text(
+            valor,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 2),
+          Text(titulo, style: const TextStyle(fontSize: 12)),
+        ],
+      ),
+    );
+  }
+}
+
+// ==================================== C I C L 0 4
+
+// class Talhao {
+//   final String nome;
+//   final double areaHa;
+//   final String cultura;
+//   const Talhao({
+//     required this.nome,
+//     required this.areaHa,
+//     required this.cultura,
+//   });
+// }
+
+// // Os dados da propriedade — a mesma lista dos exercícios.
+// const List<Talhao> talhoes = [
+//   Talhao(nome: 'Talhão 1', areaHa: 38.0, cultura: 'soja'),
+//   Talhao(nome: 'Talhão 2', areaHa: 24.5, cultura: 'milho'),
+//   Talhao(nome: 'Talhão 3', areaHa: 42.0, cultura: 'milho'),
+//   Talhao(nome: 'Talhão 4', areaHa: 31.2, cultura: 'soja'),
+//   Talhao(nome: 'Talhão 5', areaHa: 12.8, cultura: 'sorgo'),
+//   Talhao(nome: 'Talhão 6', areaHa: 19.4, cultura: 'milho'),
+//   Talhao(nome: "Talhao 7", areaHa: 89.90, cultura: 'Feijao'),
+//   Talhao(nome: 'Talhao 8', areaHa: 21.8, cultura: 'Mandioca'),
+// ];
+
+// class TelaTalhoes extends StatelessWidget {
+//   const TelaTalhoes({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Talhões'),
+//         backgroundColor: const Color(0xFF1E5631),
+//         foregroundColor: Colors.white,
+//       ),
+//       // ListView.builder percorre a lista e cria um item para cada talhão.
+//       // itemCount: quantos itens existem.
+//       // itemBuilder: uma função que recebe o índice e devolve o widget
+//       //              daquele item.
+// body: ListView.builder(
+//   itemCount: talhoes.length,
+//   itemBuilder: (context, indice) {
+//     final talhao = talhoes[indice];
+
+//     final IconData iconeCultura = switch (talhao.cultura
+//         .trim()
+//         .toLowerCase()) {
+//       'milho' => Icons.grain,
+//       'soja' => Icons.eco,
+//       'sorgo' => Icons.spa,
+
+//       _ => Icons.grass,
+//     };
+
+//     return Card(
+//       margin: EdgeInsets.symmetric(horizontal: 26, vertical: 16),
+//       elevation: 2,
+//       child: ListTile(
+//         leading: Icon(iconeCultura, color: Color(0xFF1E5631)), //icone
+//         title: Text(talhao.nome), //titulo
+//         subtitle: Text(
+//           '${talhao.areaHa.toStringAsFixed(2).replaceAll('.', ',')} ha — ${talhao.cultura}',
+//         ), //subtitulo
+//         trailing: const Icon(Icons.chevron_right),
+//       ),
+//     );
+
+//     // ListTile: um item de lista pronto, com título, subtítulo e ícones.
+//   },
+// ),
+
+//       floatingActionButton: FloatingActionButton(
+//         backgroundColor: const Color(0xFF1E5631),
+//         onPressed: () {
+//           ScaffoldMessenger.of(
+//             context,
+//           ).showSnackBar(const SnackBar(content: Text('O botao foi clicado!')));
+//         },
+//         child: const Icon(Icons.plus_one_outlined, color: Colors.white),
+//       ),
+//     );
+//   }
+// }
 
 //==================================================================
 // Atividade ciclo 2

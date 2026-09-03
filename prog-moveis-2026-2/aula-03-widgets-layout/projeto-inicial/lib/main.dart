@@ -29,66 +29,85 @@ class CadernoApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E5631)),
         useMaterial3: true,
       ),
-      home: const TelaResumo(),
+      home: const TelaTalhoes(),
     );
   }
 }
 
-// class Talhao {
-//   final String nome;
-//   final double areaHa;
-//   final String cultura;
-//   const Talhao({
-//     required this.nome,
-//     required this.areaHa,
-//     required this.cultura,
-//   });
-// }
+class Talhao {
+  final String nome;
+  final double areaHa;
+  final String cultura;
+  const Talhao({
+    required this.nome,
+    required this.areaHa,
+    required this.cultura,
+  });
+}
 
-// // Os dados da propriedade — a mesma lista dos exercícios.
-// const List<Talhao> talhoes = [
-//   Talhao(nome: 'Talhão 1', areaHa: 38.0, cultura: 'soja'),
-//   Talhao(nome: 'Talhão 2', areaHa: 24.5, cultura: 'milho'),
-//   Talhao(nome: 'Talhão 3', areaHa: 42.0, cultura: 'milho'),
-//   Talhao(nome: 'Talhão 4', areaHa: 31.2, cultura: 'soja'),
-//   Talhao(nome: 'Talhão 5', areaHa: 12.8, cultura: 'sorgo'),
-//   Talhao(nome: 'Talhão 6', areaHa: 19.4, cultura: 'milho'),
-//   Talhao(nome: "Talhao 7", areaHa: 89.90, cultura: 'Feijao'),
-//   Talhao(nome: 'Talhao 8', areaHa: 21.8, cultura: 'Mandioca')
-// ];
+// Os dados da propriedade — a mesma lista dos exercícios.
+const List<Talhao> talhoes = [
+  Talhao(nome: 'Talhão 1', areaHa: 38.0, cultura: 'soja'),
+  Talhao(nome: 'Talhão 2', areaHa: 24.5, cultura: 'milho'),
+  Talhao(nome: 'Talhão 3', areaHa: 42.0, cultura: 'milho'),
+  Talhao(nome: 'Talhão 4', areaHa: 31.2, cultura: 'soja'),
+  Talhao(nome: 'Talhão 5', areaHa: 12.8, cultura: 'sorgo'),
+  Talhao(nome: 'Talhão 6', areaHa: 19.4, cultura: 'milho'),
+  Talhao(nome: "Talhao 7", areaHa: 89.90, cultura: 'Feijao'),
+  Talhao(nome: 'Talhao 8', areaHa: 21.8, cultura: 'Mandioca'),
+];
 
-// class TelaTalhoes extends StatelessWidget {
-//   const TelaTalhoes({super.key});
+class TelaTalhoes extends StatelessWidget {
+  const TelaTalhoes({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Talhões'),
-//         backgroundColor: const Color(0xFF1E5631),
-//         foregroundColor: Colors.white,
-//       ),
-//       // ListView.builder percorre a lista e cria um item para cada talhão.
-//       // itemCount: quantos itens existem.
-//       // itemBuilder: uma função que recebe o índice e devolve o widget
-//       //              daquele item.
-//       body: ListView.builder(
-//         itemCount: talhoes.length,
-//         itemBuilder: (context, indice) {
-//           final talhao = talhoes[indice];
-//           // ListTile: um item de lista pronto, com título, subtítulo e ícones.
-//           return ListTile(
-//             leading: const Icon(Icons.grass, color: Color(0xFF1E5631)),
-//             title: Text(talhao.nome),
-//             subtitle: Text('${talhao.areaHa.toStringAsFixed(2).replaceAll('.', ',')} ha — ${talhao.cultura}'),
-//             trailing: const Icon(Icons.chevron_right),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Talhões'),
+        backgroundColor: const Color(0xFF1E5631),
+        foregroundColor: Colors.white,
+      ),
+      // ListView.builder percorre a lista e cria um item para cada talhão.
+      // itemCount: quantos itens existem.
+      // itemBuilder: uma função que recebe o índice e devolve o widget
+      //              daquele item.
+      body: ListView.builder(
+        itemCount: talhoes.length,
+        itemBuilder: (context, indice) {
+          final talhao = talhoes[indice];
 
+          final IconData iconeCultura = switch (talhao.cultura
+              .trim()
+              .toLowerCase()) {
+            'milho' => Icons.grain,
+            'soja' => Icons.eco,
+            'sorgo' => Icons.spa,
+
+            _ => Icons.grass,
+          };
+
+          return Card(
+            margin: EdgeInsets.symmetric(horizontal: 26, vertical: 16),
+            elevation: 2,
+            child: ListTile(
+              leading: Icon(iconeCultura, color: Color(0xFF1E5631)), //icone
+              title: Text(talhao.nome), //titulo
+              subtitle: Text(
+                '${talhao.areaHa.toStringAsFixed(2).replaceAll('.', ',')} ha — ${talhao.cultura}',
+              ), //subtitulo
+              trailing: const Icon(Icons.chevron_right),
+            ),
+          );
+
+          // ListTile: um item de lista pronto, com título, subtítulo e ícones.
+        },
+      ),
+    );
+  }
+}
+
+//==================================================================
 // Atividade ciclo 2
 
 // class TelaResumo extends StatelessWidget {
@@ -215,81 +234,81 @@ class CadernoApp extends StatelessWidget {
 // }
 
 //Ciclo 1
-class TelaResumo extends StatelessWidget {
-  const TelaResumo({super.key});
+// class TelaResumo extends StatelessWidget {
+//   const TelaResumo({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Atividade do clico 1'),
-        backgroundColor: const Color(0xFF1E5631),
-        foregroundColor: Colors.white,
-      ),
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Atividade do clico 1'),
+//         backgroundColor: const Color(0xFF1E5631),
+//         foregroundColor: Colors.white,
+//       ),
 
-      // Container: uma caixa que dá cor, margem, borda e tamanho ao filho.
-      body: Container(
-        // Padding interno: afasta o conteúdo das bordas da caixa.
-        padding: const EdgeInsets.all(16),
+//       // Container: uma caixa que dá cor, margem, borda e tamanho ao filho.
+//       body: Container(
+//         // Padding interno: afasta o conteúdo das bordas da caixa.
+//         padding: const EdgeInsets.all(16),
 
-        // Column: empilha os filhos na vertical, de cima para baixo.
-        child: Column(
-          // Controla o posicionamento dos filhos na horizontal.
-          crossAxisAlignment: CrossAxisAlignment.center,
+//         // Column: empilha os filhos na vertical, de cima para baixo.
+//         child: Column(
+//           // Controla o posicionamento dos filhos na horizontal.
+//           crossAxisAlignment: CrossAxisAlignment.center,
 
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: const Color(0xFFD5F5E3),
+//           children: [
+//             Container(
+//               padding: const EdgeInsets.all(16),
+//               color: const Color(0xFFD5F5E3),
 
-              child: Column(
-                children: [
-                  Text(
-                    'Fazenda Ferreira vale do goias',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
+//               child: Column(
+//                 children: [
+//                   Text(
+//                     'Fazenda Ferreira vale do goias',
+//                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+//                   ),
 
-                  // SizedBox: um espaço vazio de tamanho fixo.
-                  SizedBox(height: 4),
+//                   // SizedBox: um espaço vazio de tamanho fixo.
+//                   SizedBox(height: 4),
 
-                  Text(
-                    'Ceres O universo do mundo — GO',
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
-                  ),
-                ],
-              ),
-            ),
+//                   Text(
+//                     'Ceres O universo do mundo — GO',
+//                     style: TextStyle(fontSize: 16, color: Colors.black54),
+//                   ),
+//                 ],
+//               ),
+//             ),
 
-            SizedBox(height: 16),
+//             SizedBox(height: 16),
 
-            // Row: distribui os filhos na horizontal, lado a lado.
-            Row(
-              children: [
-                Text('Área total: ', style: TextStyle(fontSize: 16)),
-                Text(
-                  '96,4 ha',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
+//             // Row: distribui os filhos na horizontal, lado a lado.
+//             Row(
+//               children: [
+//                 Text('Área total: ', style: TextStyle(fontSize: 16)),
+//                 Text(
+//                   '96,4 ha',
+//                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+//                 ),
+//               ],
+//             ),
 
-            SizedBox(height: 16),
+//             SizedBox(height: 16),
 
-            Row(
-              children: [
-                Text('Responsavel: ', style: TextStyle(fontSize: 16)),
-                Text(
-                  'Felipe',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//             Row(
+//               children: [
+//                 Text('Responsavel: ', style: TextStyle(fontSize: 16)),
+//                 Text(
+//                   'Felipe',
+//                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // Widget build(BuildContext context) {
 //   return Scaffold(

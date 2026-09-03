@@ -60,6 +60,8 @@ class CadernoApp extends StatelessWidget {
 //   }
 // }
 
+
+// Ciclo 4 com as 4 atividades
 class Talhao {
   final String nome;
   final double areaHa;

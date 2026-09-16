@@ -30,7 +30,7 @@ class MinhaTela extends StatelessWidget {
         title: Padding(
           padding: EdgeInsets.all(20),
           child: Text(
-            "Comprador de proposta de venda",
+            "Comparador de proposta de venda",
             style: GoogleFonts.openSans(
               fontSize: 22,
               fontWeight: FontWeight.bold,

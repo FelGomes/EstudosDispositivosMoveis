@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class _Formulario extends StatelessWidget {
+class Formulario extends StatelessWidget {
 
   final TextEditingController controlador;
   final TextInputType tipagemValor;
   final String rotulo;
   
-  const _Formulario ({
+  const Formulario ({
+    super.key,
     required this.controlador,
     required this.tipagemValor,
     required this.rotulo,
@@ -23,6 +23,7 @@ class _Formulario extends StatelessWidget {
       decoration: InputDecoration(
         labelText: rotulo,
         border:  const OutlineInputBorder(),
+        fillColor: Color(0Xff21ab),
       ),
 
     );

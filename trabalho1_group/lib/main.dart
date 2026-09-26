@@ -61,7 +61,7 @@ class _MinhaTelaState extends State<MinhaTela> {
         title: Padding(
           padding: EdgeInsets.all(20),
           child: Text(
-            "Comparador de proposta de venda",
+            "Vendas do grupo DFC",
             style: GoogleFonts.openSans(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -214,13 +214,36 @@ class _MinhaTelaState extends State<MinhaTela> {
               ),
 
               const SizedBox(height: 24),
+              
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Melhor proposta: ",
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
+                    )
+                    
+                    
+                  ],
+
+                  
+                ),
+
+              ),
+              
 
               Builder(
                 builder: (context) {
                   final listaOrdenada = Proposta.verificarPropostas();
 
+                  
+
                   if (listaOrdenada == null || listaOrdenada.isEmpty) {
+                    const Text("Não foi realizado nenhuma venda!");
                     return const SizedBox.shrink();
+
                   }
 
                   return Column(

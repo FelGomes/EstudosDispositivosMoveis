@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -95,6 +97,14 @@ class _MinhaTelaState extends State<MinhaTela> {
                 controlador: _compradorController,
                 tipagemValor: TextInputType.text,
                 rotulo: "Informe o nome do comprador da safra",
+                validador: (value) {
+                  if (RegExp(r'[0-9]').hasMatch(value ?? '')) {
+                    return 'O nome do comprador nao pode haver numeros!';
+                  }
+                  if (value == null || value.trim().isEmpty) {
+                    return "O nome do comprador não pode ser vazio!";
+                  }
+                },
               ),
 
               const SizedBox(height: 30),
@@ -104,16 +114,45 @@ class _MinhaTelaState extends State<MinhaTela> {
                 controlador: _precoSacaController,
                 tipagemValor: TextInputType.numberWithOptions(decimal: true),
                 rotulo: "Informe o preço da safra",
+
+                validador: (valoPreco) {
+                  final precoSaca = double.tryParse(
+                    (valoPreco ?? '').replaceAll(',', '.'),
+                  );
+                  if(precoSaca == null) {
+                    return "O valor da saca não pode ser vazio";
+                  }
+
+                  if (precoSaca <= 0.0) {
+                    return "O valor da saca não pode ser vazio";
+                  }
+
+                },
               ),
 
               const SizedBox(height: 30),
 
               // Formulario para receber o prazo de pagamento da safra
-              
               Formulario(
                 controlador: _prazoPagamentoContoller,
                 tipagemValor: TextInputType.numberWithOptions(decimal: false),
                 rotulo: "Quantidade de dias",
+
+                validador: (quantidadeDias) {
+
+                  final dias = int.tryParse((quantidadeDias ?? '').trim());
+
+                  if(dias == null) {
+                    return "A quantidade de dias nao pode ser vazio";
+
+                  }
+
+                  if(dias <= 0) {
+                    return "Quantidade de dias não pode ser 0 ou menor que 0";
+                  }
+
+
+                },
               ),
 
               const SizedBox(height: 30),
@@ -145,7 +184,7 @@ class _MinhaTelaState extends State<MinhaTela> {
                           fontWeight: FontWeight.normal,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         shadowColor: const Color.fromARGB(103, 0, 0, 0),
                       ),
@@ -168,8 +207,6 @@ class _MinhaTelaState extends State<MinhaTela> {
                       ),
                       minimumSize: const Size(0, 50),
                     ),
-
-                    
                   ),
 
                   const SizedBox(height: 24),
@@ -192,7 +229,7 @@ class _MinhaTelaState extends State<MinhaTela> {
                         child: ListTile(
                           title: Text(proposta.comprador),
                           subtitle: Text(
-                            'R\$ ${proposta.precoSaca.toStringAsFixed(2).replaceAll(",", ".")} por saca'
+                            'R\$ ${proposta.precoSaca.toStringAsFixed(2).replaceAll(".", ",")} por saca'
                             ' • ${proposta.prazoPagamento} dias',
                           ),
                         ),

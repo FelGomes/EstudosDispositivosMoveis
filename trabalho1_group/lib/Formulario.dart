@@ -23,7 +23,7 @@ class Formulario extends StatelessWidget {
       decoration: InputDecoration(
         labelText: rotulo,
         border:  const OutlineInputBorder(),
-        fillColor: Color(0Xff21ab),
+        fillColor: Color(0xFFE8F5E9),
       ),
 
     );

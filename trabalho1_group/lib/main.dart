@@ -13,26 +13,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: MinhaTela());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFE8F5E9)),
+      ),
+      home: MinhaTela(),
+    );
   }
 }
 
-class MinhaTela extends StatelessWidget {
-  final compradorController = TextEditingController();
-  final precoSacaController = TextEditingController();
-  final prazoPagamentoContoller = TextEditingController();
+class MinhaTela extends StatefulWidget {
+  const MinhaTela({super.key});
+
+  @override
+  State<MinhaTela> createState() => _MinhaTelaState();
+}
+
+class _MinhaTelaState extends State<MinhaTela> {
+  final _compradorController = TextEditingController();
+  final _precoSacaController = TextEditingController();
+  final _prazoPagamentoContoller = TextEditingController();
   List<Proposta> melhoresProposta = [];
 
+  void limpar() {
+    _compradorController.clear();
+    _precoSacaController.clear();
+    _prazoPagamentoContoller.clear();
 
-  // Criando a função para instanciar a lista de objetos
-  void cadastrarProposta() {
-   Proposta novaProposta = Proposta(comprador: compradorController.text, precoSaca: double.parse(precoSacaController.text), prazoPagamento: DateTime.parse(prazoPagamentoContoller.text));
+    setState(() {
+      Proposta.analiseProposta.clear();
+      melhoresProposta.clear();
+    });
 
-    melhoresProposta.add(novaProposta);
-
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Dados limpados com sucesso!")),
+    );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +92,7 @@ class MinhaTela extends StatelessWidget {
 
               // Formulario para receber o nome do comprador
               Formulario(
-                controlador: compradorController,
+                controlador: _compradorController,
                 tipagemValor: TextInputType.text,
                 rotulo: "Informe o nome do comprador da safra",
               ),
@@ -84,7 +101,7 @@ class MinhaTela extends StatelessWidget {
 
               // Formulario para receber o preço da safra
               Formulario(
-                controlador: precoSacaController,
+                controlador: _precoSacaController,
                 tipagemValor: TextInputType.numberWithOptions(decimal: true),
                 rotulo: "Informe o preço da safra",
               ),
@@ -92,10 +109,11 @@ class MinhaTela extends StatelessWidget {
               const SizedBox(height: 30),
 
               // Formulario para receber o prazo de pagamento da safra
+              
               Formulario(
-                controlador: prazoPagamentoContoller,
-                tipagemValor: TextInputType.datetime,
-                rotulo: "Informe a data do pagamento",
+                controlador: _prazoPagamentoContoller,
+                tipagemValor: TextInputType.numberWithOptions(decimal: false),
+                rotulo: "Quantidade de dias",
               ),
 
               const SizedBox(height: 30),
@@ -104,21 +122,84 @@ class MinhaTela extends StatelessWidget {
                 children: [
                   Expanded(
                     child: FilledButton.icon(
-                      onPressed: cadastrarProposta,
+                      onPressed: () {
+                        final resultado = Proposta.cadastrarProposta(
+                          _compradorController,
+                          _precoSacaController,
+                          _prazoPagamentoContoller,
+                        );
+
+                        if (resultado != null) {
+                          setState(() {
+                            melhoresProposta = List.from(resultado);
+                          });
+                        }
+                      },
                       label: const Text("Verificar"),
                       icon: const Icon(Icons.check),
                       style: FilledButton.styleFrom(
                         backgroundColor: const Color(0xFF0F8C31),
                         padding: EdgeInsets.all(20),
-                        textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.normal)
+                        textStyle: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        shadowColor: const Color.fromARGB(103, 0, 0, 0),
                       ),
                     ),
                   ),
 
                   const SizedBox(width: 30),
 
-                  OutlinedButton(onPressed: onPressed, child: child)
+                  OutlinedButton.icon(
+                    onPressed: limpar,
+                    label: const Text("Limpar"),
+                    icon: const Icon(Icons.delete),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFF0000),
+                      foregroundColor: Colors.white,
+                      iconColor: Color.fromARGB(255, 252, 252, 252),
+                      textStyle: const TextStyle(fontSize: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minimumSize: const Size(0, 50),
+                    ),
+
+                    
+                  ),
+
+                  const SizedBox(height: 24),
                 ],
+              ),
+
+              const SizedBox(height: 24),
+
+              Builder(
+                builder: (context) {
+                  final listaOrdenada = Proposta.verificarPropostas();
+
+                  if (listaOrdenada == null || listaOrdenada.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return Column(
+                    children: listaOrdenada.map((proposta) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(proposta.comprador),
+                          subtitle: Text(
+                            'R\$ ${proposta.precoSaca.toStringAsFixed(2).replaceAll(",", ".")} por saca'
+                            ' • ${proposta.prazoPagamento} dias',
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
               ),
             ],
           ),

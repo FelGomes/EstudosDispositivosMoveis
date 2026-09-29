@@ -126,3 +126,15 @@ Verifique se o Flutter está configurado corretamente:
 
 Caso a máquina esteja totalmente configurada, basta fazer a clonagem do repositório e rodar o comando **flutter run** dentro da pasta lib e aguardar até que o sistema seja aberto. Todas as criações e instaçãoes necessárias ja foram feitas
 Como: **flutter create .** e **flutter pub get**
+
+## Contribuições
+
+O desenvolvimento da atividade foi realizado de forma individual e colaborativa. 
+Como estratégia de aprendizagem, cada integrante ficou responsável por desenvolver 
+sua própria aplicação, implementando os requisitos propostos no exercício.
+
+Essa abordagem permitiu que todos os integrantes praticassem diretamente os principais
+conceitos abordados na atividade, incluindo construção de interfaces, formulários,
+validação de dados, gerenciamento de estado, manipulação de listas e ordenação.
+
+Nesse sentido, não houve uma distruição de funcionalidade dentro do mesmo projeto em que fosse feito de forma separada, sendo realizado o exercício completo por cada intregrante, proporcionando uma melhor experiência da linguagem e suas funcionalidades.

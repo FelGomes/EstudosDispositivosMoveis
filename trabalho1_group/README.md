@@ -124,5 +124,5 @@ Para executar o projeto é necessário possuir:
 
 Verifique se o Flutter está configurado corretamente:
 
-Caso a máquina esteja totalmente configurada, basta fazer a clonagem do repositório de rodar o **flutter run** dentro da pasta lib e aguardar ate que o sistema seja aberto. Todas as criações e instaçãoes necessárias ja foram feitas
+Caso a máquina esteja totalmente configurada, basta fazer a clonagem do repositório e rodar o comando **flutter run** dentro da pasta lib e aguardar até que o sistema seja aberto. Todas as criações e instaçãoes necessárias ja foram feitas
 Como: **flutter create .** e **flutter pub get**
